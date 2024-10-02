@@ -1,0 +1,29 @@
+#Title of the simulation
+title medium-mesh 
+
+# Name of the mesh information file
+minf ./medium-mesh/minf.space
+
+# Name of the coordinates file
+mxyz ./medium-mesh/mxyz.space
+
+# Name of the connectivity file
+mien ./medium-mesh/mien
+
+# Diffusion coefficient
+D 1
+
+# Source term (heat generation)
+S 318300
+
+# Number of face groups
+nfg 1
+
+# Boundary type and value for face groups
+# Type 1 = Dirichlet
+fg 1 1 500
+
+# Number of iterations
+iter 4000000
+# Time step
+dt 0.0000001

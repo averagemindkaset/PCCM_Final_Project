@@ -1,0 +1,31 @@
+CXX = g++
+MPICXX = mpic++
+SOURCE = $(wildcard *.cpp)
+OBJECTS = $(patsubst %.cpp,%.o,$(SOURCE))
+EXECUTABLE = 2d_Unsteady_Diffusion
+CXXFLAGS =-O3 -Wno-deprecated -Wall $(VTK_CPPFLAGS)
+LDFLAGS = $(VTK_LDFLAGS)
+LIBS = -lvtkCommon -lvtkFiltering -lvtkGraphics -lvtkIO -lvtkRendering -lvtkWidgets
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(MPICXX) $(LDFLAGS) $(LIBS) $(OBJECTS) -o $(EXECUTABLE)
+	@echo DONE!
+
+-include $(OBJECTS:.o=.d)
+
+%.o: %.cpp
+	$(MPICXX) -c $(CXXFLAGS) $*.cpp -o $*.o
+	@$(MPICXX) -MM $(CXXFLAGS) $*.cpp > $*.d
+	@cp -f $*.d $*.d.tmp
+	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
+	@rm -f $*.d.tmp
+
+clean:
+	rm -rf *.o *.d $(EXECUTABLE)
+	@echo ALL CLEANED UP!
+
+rebuild:
+	make clean
+	make

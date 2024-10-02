@@ -1,0 +1,29 @@
+#Title of the simulation
+title fine-mesh
+
+# Name of the mesh information file
+minf ./fine-mesh/minf.space
+
+# Name of the coordinates file
+mxyz ./fine-mesh/mxyz.space
+
+# Name of the connectivity file
+mien ./fine-mesh/mien
+
+# Diffusion coefficient
+D 1
+
+# Source term (heat generation)
+S 318300
+
+# Number of face groups
+nfg 1
+
+# Boundary type and value for face groups
+# Type 1 = Dirichlet
+fg 1 1 500
+
+# Number of iterations
+iter 800000
+# Time step
+dt 0.000000075
